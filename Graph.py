@@ -31,6 +31,7 @@ while (flag == 0):
 		if (key1 == "y"):
 			print(nodes)
 
+	#При количестве вершин <= 15 нарисовать граф, иначе выдать запрос на рисование.
 	if (n <=15):
 		nx.draw(G, with_labels = True)
 		plt.savefig("plot.png")
@@ -43,15 +44,19 @@ while (flag == 0):
 			plt.savefig("plot.png")
 			plt.show()
 
+	nonE = nx.non_edges(G)
+	print(nonE)
+	#Спросить, нужно ли добавить ребра, если да, то сколько. 
 	print("Do you want to add any edges?")
 	keyadd = input("y/n? ")
 	if (keyadd == "y"):
 		val = int(input("How many edges need to add? "))
 		for i in range(val):
-			k = int(input("Enter start vertex "))
-			t = int(input("Enter end vertex "))
-			G.add_edges_from([(k, t)]) #Добавляем ребро от вершины k к вершине t.
+			startV = int(input("Enter start vertex "))
+			endV = int(input("Enter end vertex "))
+			G.add_edges_from([(startV, endV)]) #Добавляем ребро от вершины startV к вершине endV.
 	print("==========================================")
+	
 	#Кратчайшие пути: от введенной вершины до всех остальных и от нулевой до введённой
 	start = 0 #int(input("Enter start vertex: "))
 	end = int(input("Enter target: "))
@@ -96,7 +101,7 @@ while (flag == 0):
 		nx.draw(G, with_labels = True)
 		plt.savefig("plot.png")
 		plt.show()
-	
+	print(nx.info(G))
 	#Поменять количество вершин в графе?
 	print("Do u want another quantity of Vertex? ")
 	key = input("y/n? \n")
