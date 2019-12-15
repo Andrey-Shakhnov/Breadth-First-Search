@@ -35,10 +35,22 @@ while (flag == 0):
 		nx.draw(G, with_labels = True)
 		plt.savefig("plot.png")
 		plt.show()
-	print("input K,T")
-	k = int(input())
-	t = int(input())
-	G.add_edges_from([(k, t)]) #Добавляем ребро от вершины k к вершине t.
+	else:
+		print("Draw it?")
+		keyDraw = input("y/n? ")
+		if (keyDraw == "y"):
+			nx.draw(G, with_labels = True)
+			plt.savefig("plot.png")
+			plt.show()
+
+	print("Do you want to add any edges?")
+	keyadd = input("y/n? ")
+	if (keyadd == "y"):
+		val = int(input("How many edges need to add? "))
+		for i in range(val):
+			k = int(input("Enter start vertex "))
+			t = int(input("Enter end vertex "))
+			G.add_edges_from([(k, t)]) #Добавляем ребро от вершины k к вершине t.
 	print("==========================================")
 	#Кратчайшие пути: от введенной вершины до всех остальных и от нулевой до введённой
 	start = 0 #int(input("Enter start vertex: "))
