@@ -1,0 +1,8 @@
+Degree 0 vertex is 3
+Degree 1 vertex is 3
+Degree 2 vertex is 1
+Degree 3 vertex is 3
+Degree 4 vertex is 3
+Degree 5 vertex is 3
+Degree 6 vertex is 3
+Degree 7 vertex is 1
