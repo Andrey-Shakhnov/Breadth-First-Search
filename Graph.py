@@ -3,15 +3,15 @@ import time
 import pylab as plt
 import os
 
-flag = 0
-while (flag == 0):
+launch = True
+while (launch == True):
 	n = int(input("Enter quantity of Vertex: "))
 	p = float(input("Enter probabiluty of edge: "))
 
 	#Генерируем рандомный граф
 	G = nx.fast_gnp_random_graph(n,p)
+
 	print(G)
-	f = open('time.txt', 'w')
 	#Выполняем поиск в ширину и считаем время, за которое он производится
 	root = 0
 	time.perf_counter()
@@ -19,8 +19,6 @@ while (flag == 0):
 	nodes = [root] + [v for u, v in edges]
 	times = time.process_time()
 	print("BFS time is: ",time.process_time()," seconds")
-	f.write(str(times))
-	f.close()
 	
 	#Вывести путь поиска в ширину?
 	if (n <= 20):
@@ -44,8 +42,6 @@ while (flag == 0):
 			plt.savefig("plot.png")
 			plt.show()
 
-	nonE = nx.non_edges(G)
-	print(nonE)
 	#Спросить, нужно ли добавить ребра, если да, то сколько. 
 	print("Do you want to add any edges?")
 	keyadd = input("y/n? ")
@@ -58,30 +54,34 @@ while (flag == 0):
 	print("==========================================")
 	
 	#Кратчайшие пути: от введенной вершины до всех остальных и от нулевой до введённой
-	start = 0 #int(input("Enter start vertex: "))
-	end = int(input("Enter target: "))
-	p = nx.shortest_path(G,source = 0, target = end)
-	print(p)
-	
-	#np = nx.bidirectional_shortest_path(G,start,end)
-	#print(np)
-	f = open('degree.txt', 'w')
-	text1 = 'Degree '
-	text2 = ' vertex is '
-	tmp = 0
-	d = [] * n
-	for i in range(n):
-	#	print("Degree",i,"vertex is",G.degree[i])
-		out = text1 + str(i) + text2 + str(G.degree[i]) + '\n'
-		f.write(out)
-		d.append(G.degree[i])
-	f.close()
-	print("To open file with vertex's degrees?")
-	keyd = input("y/n? ")
-	if (keyd == "y"):
-		os.system('degree.txt')
-	d = sorted(d)
-	print("Max degree - ",max(d))
+	end = 1
+	eccentricity = dict()
+	lens = []
+
+	isolate = list(nx.isolates(G))
+	if isolate:
+		for i in isolate:
+			G.add_edge(i, end)
+
+	for i in range(n-1):
+		if end in isolate:
+			end+=1
+		else:
+			start = 0
+			p = nx.shortest_path(G,source = 0, target = end)
+			end+=1
+			if len(p) in eccentricity:
+				eccentricity[len(p)].append(p)
+			else:
+				eccentricity[len(p)] = []
+				eccentricity[len(p)].append(p)
+				lens.append(len(p))
+
+	max_len = max(lens)
+	print("Eccentricity of 0 vertex is:", max_len)
+	print(eccentricity[max_len])
+
+	ddd = eccentricity.keys()
 
 	if (n<=500):
 		print("Find center?")
@@ -93,8 +93,7 @@ while (flag == 0):
 			print("Diameter - ",diam)
 			rad = nx.radius(G)
 			print("Radius - ",rad)
-		##d = sorted(d)
-	#print(max(d), " - eccentricity")
+
 	print("Draw Graph?")
 	key3 = input("y/n? ")
 	if (key3 == "y"):
@@ -102,10 +101,11 @@ while (flag == 0):
 		plt.savefig("plot.png")
 		plt.show()
 	print(nx.info(G))
+
 	#Поменять количество вершин в графе?
 	print("Do u want another quantity of Vertex? ")
 	key = input("y/n? \n")
 	if (key == "y"):
-		flag = 0
+		launch = True
 	else: 
-		flag = 1
+		launch = False
