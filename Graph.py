@@ -78,7 +78,7 @@ while (launch == True):
 				lens.append(len(p))
 
 	max_len = max(lens)
-	print("Eccentricity of 0 vertex is:", max_len)
+	print("Eccentricity of 0 vertex is:", max_len - 1)
 	print(eccentricity[max_len])
 
 	ddd = eccentricity.keys()
