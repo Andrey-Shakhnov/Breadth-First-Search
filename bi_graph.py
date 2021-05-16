@@ -6,7 +6,7 @@ import matplotlib.pyplot as plot
 import pylab as plt
 from plot_builder import time_counter
 
-data_n = [6, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 2500]
+data_n = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 2500]
 data_test = [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
 data_t = []
 
@@ -71,9 +71,9 @@ def generate_bigraph(n):
     rad = nx.radius(g)
     print("Radius - ", rad)"""
 
-    nx.draw(g, with_labels=True)
-    plt.savefig("plot.png")
-    plt.show()
+    #nx.draw(g, with_labels=True)
+    #plt.savefig("plot.png")
+    #plt.show()
 
     return g
 
