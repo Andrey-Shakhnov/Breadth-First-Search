@@ -11,10 +11,6 @@ G3 = nx.read_edgelist('edge_list2.txt')
 time.perf_counter()
 nx.bfs_edges(G3,0)
 times = time.process_time()	
-print("BFS time is: ",time.process_time()," seconds")
-#if (n<25):
-	#nx.draw(G3, with_labels = True)
-	#plt.savefig("plot.png")
-	#plt.show()
+
 
 print(nx.info(G3))
